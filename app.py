@@ -8,6 +8,7 @@ from dash import Dash, dcc, html, dash_table, Input, Output
 # ==================================
 
 app = Dash(__name__)
+server = app.server
 app.title = "Dashboard Analítico de Vendas"
 
 # Base de dados demonstrativa
