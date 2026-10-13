@@ -1,1 +1,137 @@
+ <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Analítico</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+    header {
+      background: #123b70;
+      color: white;
+      padding: 24px;
+    }
+    header h1 { margin: 0 0 8px; }
+    header p { margin: 0; color: #dbeafe; }
+    main { padding: 24px; max-width: 1200px; margin: auto; }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px #00000010;
+    }
+    .card p { color: #64748b; margin: 0 0 12px; }
+    .card h2 { margin: 0; color: #123b70; font-size: 28px; }
+    section {
+      background: white;
+      padding: 22px;
+      margin-top: 22px;
+      border-radius: 12px;
+    }
+    button {
+      background: #123b70;
+      color: white;
+      border: 0;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    input {
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      width: 100%;
+      margin: 8px 0 14px;
+    }
+    footer { text-align: center; padding: 24px; color: #64748b; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📊 Painel Analítico</h1>
+    <p>Dashboard interativo de acompanhamento</p>
+  </header>
 
+  <main>
+    <div class="cards">
+      <div class="card">
+        <p>Total de registros</p>
+        <h2 id="total">0</h2>
+      </div>
+      <div class="card">
+        <p>Resultados positivos</p>
+        <h2 id="positivos">0</h2>
+      </div>
+      <div class="card">
+        <p>Resultados negativos</p>
+        <h2 id="negativos">0</h2>
+      </div>
+    </div>
+
+    <section>
+      <h2>Adicionar registro de teste</h2>
+      <label for="resultado">Descrição do registro</label>
+      <input id="resultado" placeholder="Digite uma descrição">
+      <label for="tipo">Resultado</label>
+      <select id="tipo">
+        <option value="positivo">Positivo</option>
+        <option value="negativo">Negativo</option>
+      </select>
+      <button onclick="adicionar()">Adicionar registro</button>
+      <p id="mensagem"></p>
+    </section>
+
+    <section>
+      <h2>Registros adicionados</h2>
+      <ul id="lista"></ul>
+    </section>
+  </main>
+
+  <footer>Painel Analítico • Versão inicial</footer>
+
+  <script>
+    let total = 0;
+    let positivos = 0;
+    let negativos = 0;
+
+    function adicionar() {
+      const campo = document.getElementById('resultado');
+      const descricao = campo.value.trim();
+      const tipo = document.getElementById('tipo').value;
+
+      if (!descricao) {
+        document.getElementById('mensagem').textContent =
+          'Digite uma descrição antes de adicionar.';
+        return;
+      }
+
+      total++;
+      if (tipo === 'positivo') positivos++;
+      else negativos++;
+
+      document.getElementById('total').textContent = total;
+      document.getElementById('positivos').textContent = positivos;
+      document.getElementById('negativos').textContent = negativos;
+
+      const item = document.createElement('li');
+      item.textContent = descricao + ' — ' + tipo;
+      document.getElementById('lista').appendChild(item);
+
+      campo.value = '';
+      document.getElementById('mensagem').textContent =
+        'Registro adicionado com sucesso!';
+    }
+  </script>
+</body>
+</html>
